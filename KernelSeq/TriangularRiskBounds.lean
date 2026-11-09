@@ -1,3 +1,4 @@
+import KernelSeq.ExpectationGoodRiskAssembly
 import KernelSeq.TriangularRiskFacts
 import KernelSeq.UniformGoodBias
 import KernelSeq.UniformGoodVariance

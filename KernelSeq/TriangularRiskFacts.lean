@@ -1,3 +1,6 @@
+import KernelSeq.ExpectationBiasMeasurability
+import KernelSeq.ExpectationDimension
+import KernelSeq.ExpectationVarianceAsymptotics
 import KernelSeq.TriangularRiskModel
 
 /-!

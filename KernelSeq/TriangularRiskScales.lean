@@ -1,3 +1,4 @@
+import KernelSeq.ExpectationScale
 import KernelSeq.TriangularRiskFacts
 
 /-!

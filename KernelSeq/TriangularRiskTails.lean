@@ -1,3 +1,4 @@
+import KernelSeq.ExpectationCovarianceTail
 import KernelSeq.TriangularRiskScales
 
 /-!

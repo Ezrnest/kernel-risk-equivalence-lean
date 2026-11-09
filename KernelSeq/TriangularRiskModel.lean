@@ -1,4 +1,5 @@
-import KernelSeq.ExpectationRiskEquivalenceComplete
+import KernelSeq.ExpectationPredictionRisk
+import KernelSeq.OriginalScaleParameters
 
 /-!
 # Genuine row-dependent RKHS regression models

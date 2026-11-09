@@ -17,7 +17,16 @@ The toolchain file selects Lean 4.31.0. Lake uses the dependency revisions in `l
 
 ## Main results
 
-Import `KernelSeq` to load the development. The declarations in the table are in the `KernelSeq` namespace. Their Lean statements specify the precise hypotheses and conclusions.
+Import `KernelSeq` to load the entire development. To load a part of it, use one of the following entry points.
+
+| Import | Contents |
+| --- | --- |
+| `KernelSeq.RiskEquivalence` | Fixed-model and changing-model risk theorems, sequence benchmarks, and spectral-decay applications |
+| `KernelSeq.Filters` | Spectral filter contracts, admissibility, qualification, and source-ball saturation |
+| `KernelSeq.Pinsker` | Gaussian RKHS minimax risk and Pinsker attainment |
+| `KernelSeq.Spherical` | Spherical spectra, risk equivalence, and high-dimensional applications |
+
+The declarations in the table below are in the `KernelSeq` namespace. Their Lean statements specify the precise hypotheses and conclusions.
 
 | Result | Declaration | Source |
 | --- | --- | --- |
@@ -30,4 +39,4 @@ Import `KernelSeq` to load the development. The declarations in the table are in
 
 ## Proof audit
 
-The default build runs [KernelSeqAudit.lean](KernelSeqAudit.lean). The audit checks that theorem and definition dependencies in the `KernelSeq` namespace use only the standard Lean axioms `propext`, `Classical.choice`, and `Quot.sound`. It also checks selected theorem signatures for external analytic premises.
+The default build checks that every library source module is reachable from `import KernelSeq` and runs the [proof audit](KernelSeqAudit.lean). The audit checks transitive dependencies of theorems, definitions, opaque constants, and axioms in the library, including private declarations. It allows the standard Lean axioms `propext`, `Classical.choice`, and `Quot.sound` and checks selected theorem signatures for external analytic or scale assumptions.
