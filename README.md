@@ -15,9 +15,25 @@ lake build
 
 The toolchain file selects Lean 4.31.0. Lake uses the dependency revisions in `lake-manifest.json`.
 
+## Reusable foundations
+
+The repository provides two Lean libraries. `KernelFoundations` depends only on Mathlib and can be built on its own with `lake build KernelFoundations`. `KernelSeq` builds on it to formalize the paper's risk and minimax results.
+
+Use `import KernelFoundations` for the whole foundation library, or choose a narrower import. The declarations are in the `KernelFoundations` namespace.
+
+| Import | Representative result |
+| --- | --- |
+| `KernelFoundations.RKHSFeature` | Strong measurability of the canonical feature map and the canonical map into L² for real scalar RKHSs |
+| `KernelFoundations.PopulationCovariance` | The adjoint and covariance integral formulas for square-integrable feature maps |
+| `KernelFoundations.CompactEmbedding` | Compactness of the canonical RKHS map and the prediction covariance |
+| `KernelFoundations.CompactSpectral` | The compact spectral basis and the regularized square root and inverse square root |
+| `KernelFoundations.SingularSystem` | The singular basis and Parseval identity on the closed prediction range |
+| `KernelFoundations.Leverage` | Covariance trace, effective dimension, and essential supremum of normalized leverage |
+| `KernelFoundations.SourceEllipsoid` | Fractional covariance powers, source balls, and their positive-spectrum ellipsoid representation |
+
 ## Main results
 
-Import `KernelSeq` to load the entire development. To load a part of it, use one of the following entry points.
+Import `KernelSeq` to load the entire development, including the foundations. Existing `KernelSeq` imports also re-export the foundational results they provide. For paper results, use one of the following entry points.
 
 | Import | Contents |
 | --- | --- |
@@ -39,4 +55,4 @@ The declarations in the table below are in the `KernelSeq` namespace. Their Lean
 
 ## Proof audit
 
-The default build checks that every library source module is reachable from `import KernelSeq` and runs the [proof audit](KernelSeqAudit.lean). The audit checks transitive dependencies of theorems, definitions, opaque constants, and axioms in the library, including private declarations. It allows the standard Lean axioms `propext`, `Classical.choice`, and `Quot.sound` and checks selected theorem signatures for external analytic or scale assumptions.
+The default build checks that each library's umbrella covers its source modules, that `KernelFoundations` is independent of `KernelSeq`, and that both libraries reach the [proof audit](KernelSeqAudit.lean). The audit checks transitive dependencies of theorems, definitions, opaque constants, and axioms in both libraries, including private declarations. It allows the standard Lean axioms `propext`, `Classical.choice`, and `Quot.sound` and checks selected theorem signatures for external analytic or scale assumptions.

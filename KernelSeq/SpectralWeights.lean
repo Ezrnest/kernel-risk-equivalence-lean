@@ -1,3 +1,4 @@
+import KernelFoundations.RegularizedWeights
 import KernelSeq.ResidualFilter
 import Mathlib.Topology.Algebra.InfiniteSum.Real
 
@@ -13,6 +14,8 @@ Identifying these series with operator functional calculus and Hilbert norms
 
 namespace KernelSeq
 
+export KernelFoundations (regularization_weight_mem summable_regularized_coefficients)
+
 open ResidualFilter
 
 noncomputable section
@@ -20,13 +23,6 @@ noncomputable section
 /-- The positive residual weight `a_{lam,α}(t)` in the manuscript. -/
 def residualWeight (lam α : ℝ) (φ : ℝ → ℝ) (t : ℝ) : ℝ :=
   residual φ t + (lam / (t + lam)) ^ (α / 2)
-
-/-- Every spectral value has a regularization weight in (0,1]. -/
-theorem regularization_weight_mem {lam M t : ℝ} (hlam : 0 < lam)
-    (ht : t ∈ Set.Icc (0 : ℝ) M) :
-    0 < lam / (t + lam) ∧ lam / (t + lam) ≤ 1 := by
-  have hden : 0 < t + lam := add_pos_of_nonneg_of_pos ht.1 hlam
-  exact ⟨div_pos hlam hden, (div_le_one hden).2 (by linarith [ht.1])⟩
 
 /-- Residual admissibility implies that the source weight is nonnegative. -/
 theorem residualWeight_nonneg {lam M α t : ℝ} {φ : ℝ → ℝ}
@@ -62,22 +58,6 @@ theorem residualWeight_sq_le {lam M ρ A α t : ℝ} {φ : ℝ → ℝ}
     congr 1
     ring
   simpa only [mul_pow, hpow] using hsquare
-
-/-- The regularized spectral target series is summable by direct comparison
-with the unweighted square-summable coefficient sequence. -/
-theorem summable_regularized_coefficients {J : Type*} {lam M α : ℝ}
-    (t f : J → ℝ) (hlam : 0 < lam) (hα : 0 ≤ α)
-    (ht : ∀ j, t j ∈ Set.Icc (0 : ℝ) M)
-    (hf : Summable (fun j => f j ^ 2)) :
-    Summable (fun j => (lam / (t j + lam)) ^ α * f j ^ 2) := by
-  apply Summable.of_nonneg_of_le _ _ hf
-  · intro j
-    exact mul_nonneg (Real.rpow_nonneg (regularization_weight_mem hlam (ht j)).1.le _)
-      (sq_nonneg _)
-  · intro j
-    have hb := regularization_weight_mem hlam (ht j)
-    have hpow := Real.rpow_le_one hb.1.le hb.2 hα
-    simpa only [one_mul] using mul_le_mul_of_nonneg_right hpow (sq_nonneg (f j))
 
 /-- Summability of the squared residual-weighted target coefficients is proved,
 not assumed as an additional source condition. -/

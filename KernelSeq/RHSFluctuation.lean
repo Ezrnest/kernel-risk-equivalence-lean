@@ -48,11 +48,7 @@ theorem integral_norm_sq_centered [IsProbabilityMeasure μ] {u : X → H}
   simp
   ring
 
-/-- The scalar `L²` representative has exactly its Hilbert-space squared norm. -/
-theorem integral_sq_L2 (r : Lp ℝ 2 μ) : (∫ x, r x ^ 2 ∂μ) = ‖r‖ ^ 2 := by
-  rw [← real_inner_self_eq_norm_sq]
-  change (∫ x, r x ^ 2 ∂μ) = ∫ x, inner ℝ (r x) (r x) ∂μ
-  simp
+export KernelFoundations (integral_sq_L2)
 
 omit [CompleteSpace H] in
 /-- A leverage bound makes the normalized, residual-weighted feature square integrable. -/

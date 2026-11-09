@@ -3,8 +3,8 @@ import KernelSeq
 /-!
 # Transitive foundation audit
 
-Theorems, definitions, opaque constants, and axioms from the `KernelSeq`
-library may depend only on the three standard foundations below.
+Theorems, definitions, opaque constants, and axioms from `KernelFoundations`
+and `KernelSeq` may depend only on the three standard foundations below.
 Module provenance includes private declarations.
 -/
 
@@ -16,7 +16,8 @@ run_cmd do
   let mut checked := 0
   for (name, info) in env.constants.toList do
     let some idx := env.getModuleIdxFor? name | continue
-    if (`KernelSeq).isPrefixOf modules[idx.toNat]! then
+    let origin := modules[idx.toNat]!
+    if (`KernelSeq).isPrefixOf origin || (`KernelFoundations).isPrefixOf origin then
       match info with
       | .thmInfo _ | .defnInfo _ | .opaqueInfo _ | .axiomInfo _ =>
         let axioms ← Lean.collectAxioms name
@@ -25,7 +26,7 @@ run_cmd do
             throwError "Disallowed axiom {ax} in {name}"
         checked := checked + 1
       | _ => pure ()
-  logInfo m!"Audited {checked} KernelSeq declarations: only propext, Classical.choice, Quot.sound allowed."
+  logInfo m!"Audited {checked} declarations across KernelFoundations and KernelSeq: only propext, Classical.choice, Quot.sound allowed."
 
 /- The complete main statement must not reintroduce one of the named
 analytic proof interfaces as a public assumption. Source correspondence and

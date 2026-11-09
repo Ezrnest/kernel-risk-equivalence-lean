@@ -1,3 +1,4 @@
+import KernelFoundations
 import KernelSeq.RiskEquivalence
 import KernelSeq.Filters
 import KernelSeq.Pinsker
