@@ -56,3 +56,7 @@ The declarations in the table below are in the `KernelSeq` namespace. Their Lean
 ## Proof audit
 
 The default build checks that each library's umbrella covers its source modules, that `KernelFoundations` is independent of `KernelSeq`, and that both libraries reach the [proof audit](KernelSeqAudit.lean). The audit checks transitive dependencies of theorems, definitions, opaque constants, and axioms in both libraries, including private declarations. It allows the standard Lean axioms `propext`, `Classical.choice`, and `Quot.sound` and checks selected theorem signatures for external analytic or scale assumptions.
+
+## License
+
+The Lean source code and documentation in this repository are licensed under [Apache-2.0](LICENSE).
